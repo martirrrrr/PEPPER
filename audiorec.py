@@ -6,7 +6,7 @@ def record_audio(ip, port, filename, duration=5):
         # Creazione del proxy per il microfono
         audio_recorder = ALProxy("ALAudioRecorder", ip, port)
         
-        # Verifica se il microfono è pronto
+        # Verifica se il microfono  pronto
         if not audio_recorder.isRecording():
             print("[INFO] Inizio registrazione audio...")
             # Avvia la registrazione
