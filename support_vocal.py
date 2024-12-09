@@ -71,7 +71,8 @@ def perform_empathic_action_with_voice(ip, port):
         print("[ERRORE] Si è verificato un problema:", e)
 
 # Parametri di connessione
-ROBOT_IP = "192.168.1.100"  # Sostituisci con l'IP di Pepper
+ROBOT_IP = "192.168.1.104"  # Sostituisci con l'IP di Pepper
+#ROBOT_IP = "192.168.0.67"
 ROBOT_PORT = 9559  # Porta predefinita di NAOqi
 
 # Esegui l'azione empatica con riconoscimento vocale
