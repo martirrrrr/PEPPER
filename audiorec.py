@@ -22,7 +22,7 @@ def record_audio(ip, port, filename, duration=5):
         print("[ERRORE] Si è verificato un problema durante la registrazione:", e)
 
 # Parametri di connessione
-ROBOT_IP = "192.168.1.100"  # Sostituisci con l'IP di Pepper
+ROBOT_IP = "192.168.1.104"  # Sostituisci con l'IP di Pepper
 ROBOT_PORT = 9559  # Porta predefinita di NAOqi
 FILENAME = "pepper_audio"  # Nome del file audio
 DURATION = 5  # Durata della registrazione in secondi
