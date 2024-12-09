@@ -1,57 +1,48 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2761
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+# -*- coding: utf-8 -*-
+import time
+from naoqi import ALProxy
 
-\f0\fs24 \cf0 from naoqi import ALProxy\
-import cv2\
-import numpy as np\
-import time\
-\
-# Parametri\
-camera_id = 0  # 0: camera frontale, 1: camera inferiore\
-resolution = 2  # 2: 640x480, 1: 320x240, 0: 160x120\
-color_space = 13  # BGR color space\
-fps = 10  # Frame per secondo\
-duration = 5  # Durata della registrazione in secondi\
-output_file = "/home/nao/video.avi"  # Percorso file di output nella memoria di Pepper\
-\
-# Connetti alla fotocamera\
-ip_robot = "192.168.1.2"  # Sostituisci con l'indirizzo IP di Pepper\
-port_robot = 9559\
-video_proxy = ALProxy("ALVideoDevice", ip_robot, port_robot)\
-\
-# Registra una nuova sessione video\
-subscriber_name = video_proxy.subscribeCamera(\
-    "python_client", camera_id, resolution, color_space, fps\
-)\
-\
-# Configura il codec e il writer per il file AVI\
-fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Codec per AVI\
-frame_size = (640, 480) if resolution == 2 else (320, 240)\
-out = cv2.VideoWriter(output_file, fourcc, fps, frame_size)\
-\
-# Registra i frame per 5 secondi\
-start_time = time.time()\
-while time.time() - start_time < duration:\
-    frame = video_proxy.getImageRemote(subscriber_name)\
-    if frame is None:\
-        print("Errore: impossibile acquisire il frame")\
-        break\
-\
-    # Estrai i dati del frame\
-    width, height = frame[0], frame[1]\
-    image_data = frame[6]\
-    img = np.frombuffer(image_data, dtype=np.uint8).reshape((height, width, 3))\
-\
-    # Scrivi il frame nel file AVI\
-    out.write(img)\
-\
-# Rilascia la risorsa della telecamera\
-video_proxy.unsubscribe(subscriber_name)\
-out.release()\
-\
-print("Video salvato come:", output_file)\
-}
+def record_video(ip, port, filename):
+    """
+    Registra un video di 5 secondi dalla fotocamera frontale di Pepper e lo salva in formato AVI.
+
+    :param ip: Indirizzo IP del robot Pepper
+    :param port: Porta del robot (default: 9559)
+    :param filename: Nome del file video da salvare (senza estensione)
+    """
+    try:
+        # Connetti al servizio ALVideoRecorder
+        video_recorder = ALProxy("ALVideoRecorder", ip, port)
+        
+        # Configura i parametri di registrazione
+        video_recorder.setCameraID(0)  # 0: Fotocamera frontale
+        video_recorder.setResolution(2)  # 2: 640x480 (kQVGA)
+        video_recorder.setFrameRate(10)  # Frame rate: 10 fps
+        video_recorder.setVideoFormat("MJPG")  # Formato video: MJPG (AVI)
+        
+        # Avvia la registrazione
+        print("[INFO] Avvio registrazione video...")
+        video_recorder.startRecording("/home/nao/recordings/cameras", filename)
+        
+        # Attendi 5 secondi per registrare il video
+        time.sleep(5)
+        
+        # Ferma la registrazione e ottieni informazioni sul video salvato
+        video_info = video_recorder.stopRecording()
+        
+        # Stampa informazioni sul file registrato
+        print("[INFO] Registrazione completata!")
+        print("Video salvato in:", video_info[1])  # Percorso completo del file
+        print("Numero di frame registrati:", video_info[0])
+    
+    except Exception as e:
+        print("[ERRORE] Si è verificato un problema:", e)
+
+# Parametri del robot
+ROBOT_IP = "192.168.1.104"  # Sostituisci con l'indirizzo IP di Pepper
+ROBOT_PORT = 9559  # Porta predefinita di NAOqi
+FILENAME = "pepper_video"  # Nome del file (senza estensione)
+
+# Esegui la funzione
+if __name__ == "__main__":
+    record_video(ROBOT_IP, ROBOT_PORT, FILENAME)
