@@ -1,41 +1,31 @@
-# -*- coding: utf-8 -*-
 import time
 from naoqi import ALProxy
 
 def record_audio(ip, port, filename, duration=5):
-    """
-    Registra un file audio WAV da Pepper e lo salva nella memoria interna.
-
-    :param ip: Indirizzo IP di Pepper
-    :param port: Porta di NAOqi (default: 9559)
-    :param filename: Nome del file audio (senza estensione)
-    :param duration: Durata della registrazione in secondi
-    """
     try:
-        # Connessione al servizio ALAudioRecorder
+        # Creazione del proxy per il microfono
         audio_recorder = ALProxy("ALAudioRecorder", ip, port)
         
-        # Inizia la registrazione
-        print("[INFO] Inizio registrazione audio...")
-        audio_recorder.startMicrophonesRecording("/home/nao/recordings/audio", filename, 16000, "wav")
-        
-        # Attendi per la durata specificata
-        time.sleep(duration)
-        
-        # Ferma la registrazione
-        audio_recorder.stopMicrophonesRecording()
-        
-        print("[INFO] Registrazione completata!")
-        print("Audio salvato come:", filename + ".wav")
-    
+        # Verifica se il microfono è pronto
+        if not audio_recorder.isRecording():
+            print("[INFO] Inizio registrazione audio...")
+            # Avvia la registrazione
+            audio_recorder.startMicrophonesRecording("/home/nao/recordings/audio", filename, 16000, "wav")
+            time.sleep(duration)
+            # Ferma la registrazione
+            audio_recorder.stopMicrophonesRecording()
+            print("[INFO] Registrazione completata!")
+            print("Audio salvato come:", filename + ".wav")
+        else:
+            print("[ERRORE] Il microfono sta già registrando un altro file.")
     except Exception as e:
-        print("[ERRORE] Si è verificato un problema:", e)
+        print("[ERRORE] Si è verificato un problema durante la registrazione:", e)
 
-# Parametri del robot
-ROBOT_IP = "192.168.1.104"  # Sostituisci con l'indirizzo IP di Pepper
+# Parametri di connessione
+ROBOT_IP = "192.168.1.100"  # Sostituisci con l'IP di Pepper
 ROBOT_PORT = 9559  # Porta predefinita di NAOqi
-FILENAME = "pepper_audio"  # Nome del file audio (senza estensione)
+FILENAME = "pepper_audio"  # Nome del file audio
+DURATION = 5  # Durata della registrazione in secondi
 
-# Esegui la funzione
-if __name__ == "__main__":
-    record_audio(ROBOT_IP, ROBOT_PORT, FILENAME)
+# Avvia la registrazione
+record_audio(ROBOT_IP, ROBOT_PORT, FILENAME, DURATION)
