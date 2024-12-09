@@ -17,9 +17,9 @@ def record_audio(ip, port, filename, duration=5):
             print("[INFO] Registrazione completata!")
             print("Audio salvato come:", filename + ".wav")
         else:
-            print("[ERRORE] Il microfono sta già registrando un altro file.")
+            print("[ERRORE] Il microfono sta gia registrando un altro file.")
     except Exception as e:
-        print("[ERRORE] Si è verificato un problema durante la registrazione:", e)
+        print("[ERRORE] Si e verificato un problema durante la registrazione:", e)
 
 # Parametri di connessione
 ROBOT_IP = "192.168.1.104"  # Sostituisci con l'IP di Pepper
