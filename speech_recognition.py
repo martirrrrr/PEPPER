@@ -16,13 +16,20 @@ def speech_recognition(ip, port):
 
         # Lista di parole che Pepper deve riconoscere
         vocabulary = ["sì", "no", "ciao", "grazie", "robot"]
-        speech_recognition.setVocabulary(vocabulary, False)  # False per evitare il riconoscimento casuale
 
         # Proxy per il memory per rilevare gli eventi
         memory = ALProxy("ALMemory", ip, port)
 
-        # Abilita il riconoscimento vocale
+        # Ferma il riconoscimento vocale prima di impostare il vocabolario
+        speech_recognition.unsubscribe("Test_ASR")
+        
+        # Imposta il vocabolario
+        speech_recognition.setVocabulary(vocabulary, False)  # False per evitare il riconoscimento casuale
+
+        # Riavvia il riconoscimento vocale
         speech_recognition.subscribe("Test_ASR")
+        
+        # Proxy per abilitare il riconoscimento vocale
         print("[INFO] Riconoscimento vocale attivato. Pronuncia una parola...")
 
         # Contatore delle interazioni
