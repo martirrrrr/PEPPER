@@ -1,74 +1,64 @@
 # -*- coding: utf-8 -*-
 from naoqi import ALProxy
-import time
 
-def execute_moves(ip, port):
+def speech_recognition(ip, port):
     """
-    Esegue una sequenza di movimenti su Pepper:
-    - Alza braccio sinistro
-    - Alza braccio destro
-    - Pollice in su (gesto generico)
-    - Incrocia le braccia
-    - Riposa
+    Funzione che utilizza Pepper per riconoscere parole e ripeterle.
+    Si ferma dopo tre richieste di nuove parole.
     """
     try:
-        # Crea il proxy per il controllo del motore e del posture
-        motion = ALProxy("ALMotion", ip, port)
-        posture = ALProxy("ALRobotPosture", ip, port)
+        # Proxy per il riconoscimento vocale
+        speech_recognition = ALProxy("ALSpeechRecognition", ip, port)
+        speech_recognition.setLanguage("Italian")  # Lingua italiana
 
-        # Abilita i motori
-        motion.wakeUp()
+        # Proxy per il text-to-speech (TTS)
+        text_to_speech = ALProxy("ALTextToSpeech", ip, port)
 
-        # Porta Pepper nella posizione iniziale
-        posture.goToPosture("StandInit", 0.5)
+        # Lista di parole che Pepper deve riconoscere
+        vocabulary = ["sì", "no", "ciao", "grazie", "robot"]
 
-        # Alza il braccio sinistro
-        print("[INFO] Alzando il braccio sinistro...")
-        names = ["LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll", "LWristYaw"]
-        angles = [-0.5, 0.3, -1.0, -0.5, 0.0]  # Posizione del braccio sinistro alzato
-        times = [1.0] * len(names)  # Tempo per ogni giunto
-        motion.angleInterpolation(names, angles, times, True)
-        time.sleep(1)
+        # Proxy per il memory per rilevare gli eventi
+        memory = ALProxy("ALMemory", ip, port)
 
-        # Alza il braccio destro
-        print("[INFO] Alzando il braccio destro...")
-        names = ["RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll", "RWristYaw"]
-        angles = [-0.5, -0.3, 1.0, 0.5, 0.0]  # Posizione del braccio destro alzato
-        times = [1.0] * len(names)  # Tempo per ogni giunto
-        motion.angleInterpolation(names, angles, times, True)
-        time.sleep(1)
+        # Pausa il riconoscimento vocale prima di modificare il vocabolario
+        speech_recognition.pause()
 
-        # Pollice in su (gesto generico con mano destra)
-        print("[INFO] Gesto del pollice in su...")
-        motion.openHand("RHand")  # Apre la mano destra
-        time.sleep(1)
-        motion.closeHand("RHand")  # Chiude la mano destra (simula un gesto)
-        time.sleep(1)
+        # Imposta il vocabolario
+        speech_recognition.setVocabulary(vocabulary, False)  # False per evitare il riconoscimento casuale
 
-        # Incrocia le braccia
-        print("[INFO] Incrociando le braccia...")
-        names = ["LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll",
-                 "RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll"]
-        angles = [0.5, 0.3, 0.0, -1.2,  # Posizione braccio sinistro
-                  0.5, -0.3, 0.0, 1.2]  # Posizione braccio destro
-        times = [1.0] * len(names)  # Tempo per ogni giunto
-        motion.angleInterpolation(names, angles, times, True)
-        time.sleep(1)
+        # Riavvia il riconoscimento vocale
+        speech_recognition.resume()
 
-        # Torna alla posizione REST
-        print("[INFO] Tornando alla posizione di riposo...")
-        posture.goToPosture("SitRelax", 0.5)
-        motion.rest()
+        # Abilita il riconoscimento vocale
+        speech_recognition.subscribe("Test_ASR")
+        print("[INFO] Riconoscimento vocale attivato. Pronuncia una parola...")
 
-        print("[INFO] Sequenza completata!")
+        # Contatore delle interazioni
+        interaction_count = 0
+        max_interactions = 3  # Numero massimo di richieste
+
+        while interaction_count < max_interactions:
+            # Aspetta che Pepper riconosca una parola
+            word_recognized = memory.getData("WordRecognized")
+            if word_recognized:
+                recognized_word = word_recognized[0]  # La parola riconosciuta
+                confidence = word_recognized[1]      # Confidenza del riconoscimento
+                if confidence > 0.5:  # Filtro per evitare falsi positivi
+                    print(f"[INFO] Hai detto: {recognized_word}")
+                    text_to_speech.say(f"Hai detto {recognized_word}")
+                    interaction_count += 1  # Incrementa il contatore
+                memory.insertData("WordRecognized", None)  # Reset dell'evento
+
+        print("[INFO] Raggiunto il limite delle interazioni. Programma terminato.")
+        text_to_speech.say("Grazie per aver giocato con me! Alla prossima!")
+        speech_recognition.unsubscribe("Test_ASR")  # Disabilita il riconoscimento vocale
 
     except Exception as e:
         print("[ERRORE] Si è verificato un problema:", e)
-
 
 if __name__ == "__main__":
     # Parametri di connessione di Pepper
     ROBOT_IP = "192.168.1.104"  # Sostituisci con l'indirizzo IP di Pepper
     ROBOT_PORT = 9559           # Porta predefinita di Pepper
 
-    execute_moves(ROBOT_IP, ROBOT_PORT)
+    speech_recognition(ROBOT_IP, ROBOT_PORT)
