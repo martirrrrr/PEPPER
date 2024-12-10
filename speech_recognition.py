@@ -20,16 +20,17 @@ def speech_recognition(ip, port):
         # Proxy per il memory per rilevare gli eventi
         memory = ALProxy("ALMemory", ip, port)
 
-        # Ferma il riconoscimento vocale prima di impostare il vocabolario
-        speech_recognition.unsubscribe("Test_ASR")
-        
+        # Verifica se il modulo è già sottoscritto
+        try:
+            speech_recognition.unsubscribe("Test_ASR")
+        except RuntimeError:
+            print("[INFO] Il modulo 'Test_ASR' non era sottoscritto. Procedo...")
+
         # Imposta il vocabolario
         speech_recognition.setVocabulary(vocabulary, False)  # False per evitare il riconoscimento casuale
 
         # Riavvia il riconoscimento vocale
         speech_recognition.subscribe("Test_ASR")
-        
-        # Proxy per abilitare il riconoscimento vocale
         print("[INFO] Riconoscimento vocale attivato. Pronuncia una parola...")
 
         # Contatore delle interazioni
