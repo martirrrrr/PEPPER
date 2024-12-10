@@ -60,17 +60,17 @@ def main(robot_ip, port):
         motion_proxy.wakeUp()
         
         # Esegui una sequenza di pose
-        print("[INFO] Eseguo la posa di saluto...")
-        set_pose(motion_proxy, posture_proxy, "wave")
+        #print("[INFO] Eseguo la posa di saluto...")
+        #set_pose(motion_proxy, posture_proxy, "wave")
         
-        print("[INFO] Eseguo la posa di indicazione...")
-        set_pose(motion_proxy, posture_proxy, "point")
+        #print("[INFO] Eseguo la posa di indicazione...")
+        #set_pose(motion_proxy, posture_proxy, "point")
         
         print("[INFO] Eseguo la posa celebrativa...")
         set_pose(motion_proxy, posture_proxy, "celebrate")
         
-        print("[INFO] Eseguo la posa seduta...")
-        set_pose(motion_proxy, posture_proxy, "sit")
+        #print("[INFO] Eseguo la posa seduta...")
+        #set_pose(motion_proxy, posture_proxy, "sit")
         
         # Torna alla posizione iniziale
         posture_proxy.goToPosture("StandInit", 0.5)
