@@ -25,14 +25,14 @@ def speech_recognition(ip, port):
             speech_recognition.unsubscribe("Test_ASR")
         except RuntimeError:
             print("[INFO] Il modulo 'Test_ASR' non era sottoscritto. Procedo...")
-
-        # Imposta il vocabolario
-        speech_recognition.setVocabulary(vocabulary, False)  # False per evitare il riconoscimento casuale
+         # False per evitare il riconoscimento casuale
 
         # Riavvia il riconoscimento vocale
         speech_recognition.subscribe("Test_ASR")
         print("[INFO] Riconoscimento vocale attivato. Pronuncia una parola...")
 
+        # Imposta il vocabolario
+        speech_recognition.setVocabulary(vocabulary, False) 
         # Contatore delle interazioni
         interaction_count = 0
         max_interactions = 3  # Numero massimo di richieste
