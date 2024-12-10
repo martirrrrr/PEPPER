@@ -6,15 +6,15 @@ def start_video_recording(video_recorder, filename):
     """
     Configura e avvia la registrazione video.
     """
-    # Configura i parametri una volta
+    # Imposta le opzioni della fotocamera prima di iniziare la registrazione
     video_recorder.setCameraID(0)  # Fotocamera frontale
     video_recorder.setResolution(2)  # Risoluzione: 640x480
     video_recorder.setFrameRate(10)  # Frame rate: 10 fps
     video_recorder.setVideoFormat("MJPG")  # Formato video: MJPG
-    
+
     # Avvia la registrazione
     video_recorder.startRecording("/home/nao/recordings/cameras", filename)
-    print "[INFO] Registrazione video avviata..."
+    print("[INFO] Registrazione video avviata...")
 
 def start_audio_recording(audio_recorder, filename):
     """
@@ -22,23 +22,23 @@ def start_audio_recording(audio_recorder, filename):
     """
     audio_channels = [0, 0, 1, 0]  # Solo microfono centrale
     audio_recorder.startMicrophonesRecording("/home/nao/recordings/audio/" + filename + ".wav", "wav", 16000, audio_channels)
-    print "[INFO] Registrazione audio avviata..."
+    print("[INFO] Registrazione audio avviata...")
 
 def stop_video_recording(video_recorder):
     """
     Ferma la registrazione video.
     """
     video_info = video_recorder.stopRecording()
-    print "[INFO] Registrazione video completata!"
-    print "Video salvato in:", video_info[1]
-    print "Numero di frame registrati:", video_info[0]
+    print("[INFO] Registrazione video completata!")
+    print("Video salvato in:", video_info[1])
+    print("Numero di frame registrati:", video_info[0])
 
 def stop_audio_recording(audio_recorder):
     """
     Ferma la registrazione audio.
     """
     audio_recorder.stopMicrophonesRecording()
-    print "[INFO] Registrazione audio completata!"
+    print("[INFO] Registrazione audio completata!")
 
 def record_audio_video(ip, port, video_filename, audio_filename):
     """
@@ -49,8 +49,10 @@ def record_audio_video(ip, port, video_filename, audio_filename):
         video_recorder = ALProxy("ALVideoRecorder", ip, port)
         audio_recorder = ALProxy("ALAudioRecorder", ip, port)
         
-        # Configura e avvia le registrazioni
+        # Configura la fotocamera e avvia la registrazione video
         start_video_recording(video_recorder, video_filename)
+        
+        # Avvia la registrazione audio
         start_audio_recording(audio_recorder, audio_filename)
         
         # Aspetta 5 secondi per completare entrambe le registrazioni
@@ -60,10 +62,10 @@ def record_audio_video(ip, port, video_filename, audio_filename):
         stop_video_recording(video_recorder)
         stop_audio_recording(audio_recorder)
         
-        print "[INFO] Registrazione audio e video completata con successo!"
+        print("[INFO] Registrazione audio e video completata con successo!")
     
     except Exception as e:
-        print "[ERRORE] Si è verificato un problema:", e
+        print("[ERRORE] Si è verificato un problema:", e)
 
 # Parametri del robot
 ROBOT_IP = "192.168.1.104"  # Sostituisci con l'indirizzo IP di Pepper
