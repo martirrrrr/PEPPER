@@ -6,10 +6,13 @@ def start_video_recording(video_recorder, filename):
     """
     Configura e avvia la registrazione video.
     """
+    # Configura i parametri una volta
     video_recorder.setCameraID(0)  # Fotocamera frontale
     video_recorder.setResolution(2)  # Risoluzione: 640x480
     video_recorder.setFrameRate(10)  # Frame rate: 10 fps
     video_recorder.setVideoFormat("MJPG")  # Formato video: MJPG
+    
+    # Avvia la registrazione
     video_recorder.startRecording("/home/nao/recordings/cameras", filename)
     print "[INFO] Registrazione video avviata..."
 
@@ -46,7 +49,7 @@ def record_audio_video(ip, port, video_filename, audio_filename):
         video_recorder = ALProxy("ALVideoRecorder", ip, port)
         audio_recorder = ALProxy("ALAudioRecorder", ip, port)
         
-        # Avvia le registrazioni simultaneamente
+        # Configura e avvia le registrazioni
         start_video_recording(video_recorder, video_filename)
         start_audio_recording(audio_recorder, audio_filename)
         
