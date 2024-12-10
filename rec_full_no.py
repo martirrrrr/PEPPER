@@ -24,7 +24,7 @@ def start_audio_recording(audio_recorder, filename):
     Configura e avvia la registrazione audio.
     """
     audio_channels = [0, 0, 1, 0]  # Solo microfono centrale
-    audio_recorder.startMicrophonesRecording("/home/nao/recordings/audio/" + filename + ".wav", "wav", 16000, audio_channels)
+    audio_recorder.startMicrophonesRecording("/home/nao/recordings/microphones/" + filename + ".wav", "wav", 16000, audio_channels)
     print("[INFO] Registrazione audio avviata...")
 
 def stop_video_recording(video_recorder):
