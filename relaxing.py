@@ -121,7 +121,7 @@ def speech_recognition2(ip, port):
                     
                     if recognized_word == "sì":
                         text_to_speech.say("Perfetto! Continuiamo con la meditazione guidata.")
-                        breathing_exercise(text_to_speech)
+                        meditation_exercise(text_to_speech)
                     
                     elif recognized_word == "no":
                         text_to_speech.say("Va bene. Facciamo una pausa. Chiamami se hai bisogno.")
@@ -142,62 +142,73 @@ def speech_recognition2(ip, port):
 
 # Guida l'utente in un esercizio di respirazione profonda
 def breathing_exercise(tts, motion, sound):
-    tts.say("Trova una posizione comoda e chiudi gli occhi, se ti va.")
+    #tts.say("Trova una posizione comoda e chiudi gli occhi, se ti va.")
+    tts.say("Inizio")
     time.sleep(2)
     #play_relaxing_sound(sound)
     time.sleep(5)  # Lascia un po' di tempo per ambientarsi
 
-    tts.say("Ora iniziamo con un respiro profondo. Inspira lentamente...")
+    tts.say("Mossa 1")
+    #tts.say("Ora iniziamo con un respiro profondo. Inspira lentamente...")
     motion.setStiffnesses(["Head", "LArm", "RArm", "LLeg", "RLeg"], [0.1]*5)
     # Movimento della testa in avanti per stimolare l'inspirazione
     motion.setAngles("Head", [0.1], 0.1)
     time.sleep(4)  # Tempo per inspirare
 
-    tts.say("...espira lentamente... 1... 2... 3... 4...")
+    tts.say("Mossa 2")
+    #tts.say("...espira lentamente... 1... 2... 3... 4...")
     motion.setAngles("Head", [-0.1], 0.1)
     time.sleep(4)  # Tempo per espirare
 
     # Ripetizione dell'esercizio
-    tts.say("Ripeti il respiro profondo, concentrandoti sull'aria che entra e esce.")
-    for _ in range(3):
+    tts.say("Concentrazione")
+    #tts.say("Ripeti il respiro profondo, concentrandoti sull'aria che entra e esce.")
+    for _ in range(2):
         tts.say("Inspira... 1... 2... 3... 4...")
         time.sleep(4)
         tts.say("Espira... 1... 2... 3... 4...")
         time.sleep(4)
 
-    tts.say("Perfetto, ora concentrati sul tuo corpo. Senti il tuo corpo che si rilassa ad ogni respiro.")
+    tts.say("Step due finito")
+    #tts.say("Perfetto, ora concentrati sul tuo corpo. Senti il tuo corpo che si rilassa ad ogni respiro.")
 
 # Funzione per guidare la meditazione e rilassamento
 def meditation_exercise(tts, motion, sound):
-    tts.say("Iniziamo un esercizio di meditazione e rilassamento.")
+    #tts.say("Iniziamo un esercizio di meditazione e rilassamento.")
+    tts.say("Step uno")
     time.sleep(2)
-    tts.say("Immagina di essere su una spiaggia tranquilla. Il suono delle onde ti rilassa...")
+    #tts.say("Immagina di essere su una spiaggia tranquilla. Il suono delle onde ti rilassa...")
     time.sleep(5)
 
     # Movimenti di rilassamento di Pepper
-    tts.say("Pepper ti guiderà ora con dei movimenti rilassanti.")
+    #tts.say("Pepper ti guiderà ora con dei movimenti rilassanti.")
     time.sleep(2)
     motion.setAngles("Head", [0.2], 0.2)  # Inclinazione della testa per mostrare calma
     time.sleep(3)
     motion.setAngles("Head", [-0.2], 0.2)
     time.sleep(3)
 
-    tts.say("Concentrati sul tuo corpo. Rilassa ogni parte, partendo dalla testa e scendendo giù verso i piedi.")
+    tts.say("Step uno finito")
+    #tts.say("Concentrati sul tuo corpo. Rilassa ogni parte, partendo dalla testa e scendendo giù verso i piedi.")
     time.sleep(4)
 
     # Esercizio di rilassamento progressivo muscolare
+    """
     tts.say("Senti i tuoi muscoli che si rilassano, partendo dalla fronte.")
     time.sleep(2)
     tts.say("Ora rilassa gli occhi, poi il viso...")
     time.sleep(2)
     tts.say("Senti la tensione che lascia il tuo corpo, concentrati sulle spalle, braccia, mani.")
     time.sleep(5)
+    """
 
-    tts.say("Ti invito a fare un altro ciclo di respirazione profonda...")
+    tts.say("Step due")
+    #tts.say("Ti invito a fare un altro ciclo di respirazione profonda...")
     breathing_exercise(tts, motion, sound)
 
     # Incoraggiamento finale
-    tts.say("Bravo! Continua a respirare lentamente e sentiti in pace. Sei pronto per una nuova giornata di serenità.")
+    tts.say("Fine")
+    #tts.say("Bravo! Continua a respirare lentamente e sentiti in pace. Sei pronto per una nuova giornata di serenità.")
     time.sleep(3)
 
 
