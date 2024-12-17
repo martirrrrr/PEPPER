@@ -56,7 +56,7 @@ def speech_recognition(ip, port):
                 recognized_word = word_recognized[0]  # La parola riconosciuta
                 confidence = word_recognized[1]      # Confidenza del riconoscimento
                 if confidence > 0.5:  # Filtro per evitare falsi positivi
-                    print("[INFO] Hai detto: {recognized_word}")
+                    print("Hai detto:", recognized_word)
                     text_to_speech.say("Hai detto {recognized_word}")
                     interaction_count += 1  # Incrementa il contatore
                     
