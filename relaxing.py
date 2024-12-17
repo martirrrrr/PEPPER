@@ -67,7 +67,7 @@ def speech_recognition(ip, port):
 def breathing_exercise(tts, motion, sound):
     tts.say("Trova una posizione comoda e chiudi gli occhi, se ti va.")
     time.sleep(2)
-    play_relaxing_sound(sound)
+    #play_relaxing_sound(sound)
     time.sleep(5)  # Lascia un po' di tempo per ambientarsi
 
     tts.say("Ora iniziamo con un respiro profondo. Inspira lentamente...")
