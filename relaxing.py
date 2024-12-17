@@ -68,7 +68,7 @@ def speech_recognition(ip, port):
                     
                     if recognized_word == vocabulary[0]:
                         text_to_speech.say("Perfetto! Continuiamo con la meditazione guidata.")
-                        breathing_exercise(text_to_speech)
+                        meditation_exercise(tts=text_to_speech, motion=None, sound=None)
                         interaction = 0
                     
                     elif recognized_word == vocabulary[1]:
@@ -90,6 +90,10 @@ def speech_recognition(ip, port):
 
 # Guida l'utente in un esercizio di respirazione profonda
 def breathing_exercise(tts, motion, sound):
+    motion = ALProxy("ALMotion", ip, port)
+    posture = ALProxy("ALRobotPosture", ip, port)
+
+    
     #tts.say("Trova una posizione comoda e chiudi gli occhi, se ti va.")
     tts.say("Inizio")
     time.sleep(2)
