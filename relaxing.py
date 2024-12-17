@@ -36,7 +36,7 @@ def speech_recognition(ip, port):
 
                 # Contatore delle interazioni
         interaction_count = 0
-        max_interactions = 3  # Numero massimo di richieste
+        max_interactions = 30  # Numero massimo di richieste
 
         while interaction_count < max_interactions:
             # Aspetta che Pepper riconosca una parola
