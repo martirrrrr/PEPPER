@@ -46,12 +46,11 @@ def speech_recognition(ip, port):
 
 
                 # Contatore delle interazioni
-        interaction_count = 0
-        max_interactions = 30  # Numero massimo di richieste
+        interaction = 1  # Numero massimo di richieste
         
         text_to_speech.say("Vogliamo incominciare?")
 
-        while interaction_count < max_interactions:
+        while interaction:
             # Aspetta che Pepper riconosca una parola
             time.sleep(5)
             word_recognized = memory.getData("WordRecognized")
@@ -66,16 +65,18 @@ def speech_recognition(ip, port):
                     if recognized_word == "sì":
                         text_to_speech.say("Perfetto! Continuiamo con la meditazione guidata.")
                         breathing_exercise(text_to_speech)
+                        interaction = 0
                     
                     elif recognized_word == "no":
                         text_to_speech.say("Va bene. Facciamo una pausa. Chiamami se hai bisogno.")
+                        interaction = 0
                     
                     elif recognized_word == "aiuto":
                         text_to_speech.say("Sono qui per aiutarti. Posso guidarti in un esercizio di respirazione o rilassamento. Di' sì per iniziare.")
                 
                 memory.insertData("WordRecognized", None)  # Reset dell'evento
 
-        print("[INFO] Raggiunto il limite delle interazioni. Programma terminato.")
+        print("[INFO] Programma terminato.")
         text_to_speech.say("Grazie per aver giocato con me! Alla prossima!")
         speech_recognition.unsubscribe("Test_ASR")  # Disabilita il riconoscimento vocale
 
