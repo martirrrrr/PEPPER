@@ -41,16 +41,19 @@ def speech_recognition(ip, port):
         # Riattiva il motore ASR
         speech_recognition.subscribe("Test_ASR")
         speech_recognition.pause(False)
+        text_to_speech.say("Benvenuto")
         print("[INFO] Riconoscimento vocale attivato. Pronuncia una parola...")
 
 
                 # Contatore delle interazioni
         interaction_count = 0
         max_interactions = 30  # Numero massimo di richieste
+        
+        text_to_speech.say("Vogliamo incominciare?")
 
         while interaction_count < max_interactions:
             # Aspetta che Pepper riconosca una parola
-            text_to_speech.say("Vogliamo incominciare?")
+            time.sleep(5)
             word_recognized = memory.getData("WordRecognized")
             if word_recognized:
                 recognized_word = word_recognized[0]  # La parola riconosciuta
@@ -201,7 +204,5 @@ if __name__ == "__main__":
     # Parametri di connessione di Pepper
     ROBOT_IP = "192.168.1.104"  # Sostituisci con l'indirizzo IP di Pepper
     ROBOT_PORT = 9559           # Porta predefinita di Pepper
-
-    text_to_speech.say("Benvenuto")
     #text_to_speech.say("Benvenuto in questa sessione di meditazione.")
     speech_recognition(ROBOT_IP, ROBOT_PORT)
