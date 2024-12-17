@@ -21,7 +21,7 @@ def speech_recognition(ip, port):
         print("Lingue disponibili:", available_languages)
 
         
-        #speech_recognition.setLanguage("Italian")  # Lingua italiana
+        speech_recognition.setLanguage("Italian")  # Lingua italiana
 
         # Proxy per il text-to-speech (TTS)
         text_to_speech = ALProxy("ALTextToSpeech", ip, port)
