@@ -123,11 +123,11 @@ def meditation_exercise(tts, ip, port, sound=None):
     time.sleep(2)
     time.sleep(5)
 
-    # Movimenti di rilassamento
-    motion.setAngles("Head", 0.2, 0.2)  # Movimento della testa verso l'alto
+    motion.setAngles(["HeadYaw", "HeadPitch"], [0.0, 0.2], 0.2)  # Testa verso l'alto
     time.sleep(3)
-    motion.setAngles("Head", -0.2, 0.2)  # Movimento della testa verso il basso
+    motion.setAngles(["HeadYaw", "HeadPitch"], [0.0, -0.2], 0.2)  # Testa verso il basso
     time.sleep(3)
+
 
     tts.say("Step uno finito")
     time.sleep(4)
