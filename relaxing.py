@@ -52,7 +52,6 @@ def speech_recognition(ip, port):
 
         while interaction:
             # Aspetta che Pepper riconosca una parola
-            time.sleep(3)
             word_recognized = memory.getData("WordRecognized")
             if word_recognized:
                 recognized_word = word_recognized[0]  # La parola riconosciuta
