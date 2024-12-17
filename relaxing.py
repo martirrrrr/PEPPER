@@ -41,6 +41,7 @@ def speech_recognition(ip, port):
         # Riattiva il motore ASR
         speech_recognition.subscribe("Test_ASR")
         speech_recognition.pause(False)
+        
         text_to_speech.say("Benvenuto")
         print("[INFO] Riconoscimento vocale attivato. Pronuncia una parola...")
 
