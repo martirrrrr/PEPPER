@@ -10,6 +10,68 @@ def play_relaxing_sound(sound):
 
 def speech_recognition(ip, port):
     """
+    Funzione che utilizza Pepper per riconoscere parole e ripeterle.
+    Si ferma dopo tre richieste di nuove parole.
+    """
+    try:
+        # Proxy per il riconoscimento vocale
+        speech_recognition = ALProxy("ALSpeechRecognition", ip, port)
+        speech_recognition.setLanguage("Italian")  # Lingua italiana
+
+        # Proxy per il text-to-speech (TTS)
+        text_to_speech = ALProxy("ALTextToSpeech", ip, port)
+
+        # Lista di parole che Pepper deve riconoscere
+        vocabulary = ["sì", "no", "aiuto"]
+
+        # Proxy per il memory per rilevare gli eventi
+        memory = ALProxy("ALMemory", ip, port)
+
+        # Assicurati che il motore ASR sia disattivato
+        try:
+            speech_recognition.pause(True)
+            speech_recognition.unsubscribe("Test_ASR")
+        except RuntimeError:
+            print("[INFO] Il modulo 'Test_ASR' non era sottoscritto. Procedo...")
+
+                # Contatore delle interazioni
+        interaction_count = 0
+        max_interactions = 3  # Numero massimo di richieste
+
+        while interaction_count < max_interactions:
+            # Aspetta che Pepper riconosca una parola
+            word_recognized = memory.getData("WordRecognized")
+            if word_recognized:
+                recognized_word = word_recognized[0]  # La parola riconosciuta
+                confidence = word_recognized[1]      # Confidenza del riconoscimento
+                if confidence > 0.5:  # Filtro per evitare falsi positivi
+                    print(f"[INFO] Hai detto: {recognized_word}")
+                    text_to_speech.say(f"Hai detto {recognized_word}")
+                    interaction_count += 1  # Incrementa il contatore
+                    
+                    if recognized_word == "sì":
+                        text_to_speech.say("Perfetto! Continuiamo con la meditazione guidata.")
+                        breathing_exercise(text_to_speech)
+                    
+                    elif recognized_word == "no":
+                        text_to_speech.say("Va bene. Facciamo una pausa. Chiamami se hai bisogno.")
+                    
+                    elif recognized_word == "aiuto":
+                        text_to_speech.say("Sono qui per aiutarti. Posso guidarti in un esercizio di respirazione o rilassamento. Di' sì per iniziare.")
+                
+                memory.insertData("WordRecognized", None)  # Reset dell'evento
+
+        print("[INFO] Raggiunto il limite delle interazioni. Programma terminato.")
+        text_to_speech.say("Grazie per aver giocato con me! Alla prossima!")
+        speech_recognition.unsubscribe("Test_ASR")  # Disabilita il riconoscimento vocale
+
+    except Exception as e:
+        print("[ERRORE] Si è verificato un problema:", e)
+
+
+
+def speech_recognition2(ip, port):
+    """
     Funzione che utilizza Pepper per riconoscere le parole 'sì', 'no' e 'aiuto'.
     """
     try:
