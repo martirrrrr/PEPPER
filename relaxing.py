@@ -89,32 +89,25 @@ def speech_recognition(ip, port):
 
 
 # Guida l'utente in un esercizio di respirazione profonda
-def breathing_exercise(tts, motion, sound):
+# Funzione per l'esercizio di respirazione
+def breathing_exercise(tts, ip, port, sound=None):
     motion = ALProxy("ALMotion", ip, port)
     posture = ALProxy("ALRobotPosture", ip, port)
 
-    
-    #tts.say("Trova una posizione comoda e chiudi gli occhi, se ti va.")
     tts.say("Inizio")
     time.sleep(2)
-    #play_relaxing_sound(sound)
-    time.sleep(5)  # Lascia un po' di tempo per ambientarsi
+    time.sleep(5)  # Pausa iniziale per ambientarsi
 
     tts.say("Mossa 1")
-    #tts.say("Ora iniziamo con un respiro profondo. Inspira lentamente...")
     motion.setStiffnesses(["Head", "LArm", "RArm", "LLeg", "RLeg"], [0.1]*5)
-    # Movimento della testa in avanti per stimolare l'inspirazione
-    motion.setAngles("Head", [0.1], 0.1)
-    time.sleep(4)  # Tempo per inspirare
+    motion.setAngles("Head", 0.1, 0.1)  # Movimento della testa in avanti
+    time.sleep(4)
 
     tts.say("Mossa 2")
-    #tts.say("...espira lentamente... 1... 2... 3... 4...")
-    motion.setAngles("Head", [-0.1], 0.1)
-    time.sleep(4)  # Tempo per espirare
+    motion.setAngles("Head", -0.1, 0.1)  # Movimento della testa all'indietro
+    time.sleep(4)
 
-    # Ripetizione dell'esercizio
     tts.say("Concentrazione")
-    #tts.say("Ripeti il respiro profondo, concentrandoti sull'aria che entra e esce.")
     for _ in range(2):
         tts.say("Inspira... 1... 2... 3... 4...")
         time.sleep(4)
@@ -122,26 +115,21 @@ def breathing_exercise(tts, motion, sound):
         time.sleep(4)
 
     tts.say("Step due finito")
-    #tts.say("Perfetto, ora concentrati sul tuo corpo. Senti il tuo corpo che si rilassa ad ogni respiro.")
 
-# Funzione per guidare la meditazione e rilassamento
-def meditation_exercise(tts, motion, sound):
-    #tts.say("Iniziamo un esercizio di meditazione e rilassamento.")
+# Funzione per la meditazione guidata
+def meditation_exercise(tts, ip, port, sound=None):
+    motion = ALProxy("ALMotion", ip, port)
     tts.say("Step uno")
     time.sleep(2)
-    #tts.say("Immagina di essere su una spiaggia tranquilla. Il suono delle onde ti rilassa...")
     time.sleep(5)
 
-    # Movimenti di rilassamento di Pepper
-    #tts.say("Pepper ti guiderà ora con dei movimenti rilassanti.")
-    time.sleep(2)
-    motion.setAngles("Head", [0.2], 0.2)  # Inclinazione della testa per mostrare calma
+    # Movimenti di rilassamento
+    motion.setAngles("Head", 0.2, 0.2)  # Movimento della testa verso l'alto
     time.sleep(3)
-    motion.setAngles("Head", [-0.2], 0.2)
+    motion.setAngles("Head", -0.2, 0.2)  # Movimento della testa verso il basso
     time.sleep(3)
 
     tts.say("Step uno finito")
-    #tts.say("Concentrati sul tuo corpo. Rilassa ogni parte, partendo dalla testa e scendendo giù verso i piedi.")
     time.sleep(4)
 
     # Esercizio di rilassamento progressivo muscolare
