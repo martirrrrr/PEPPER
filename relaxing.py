@@ -22,7 +22,7 @@ def speech_recognition(ip, port):
         text_to_speech = ALProxy("ALTextToSpeech", ip, port)
 
         # Lista di parole che Pepper deve riconoscere
-        vocabulary = ["sì", "no", "aiuto"]
+        vocabulary = ["si", "no", "aiuto"]
 
         # Proxy per il memory per rilevare gli eventi
         memory = ALProxy("ALMemory", ip, port)
@@ -56,7 +56,8 @@ def speech_recognition(ip, port):
             word_recognized = memory.getData("WordRecognized")
             if word_recognized:
                 recognized_word = word_recognized[0]  # La parola riconosciuta
-                confidence = word_recognized[1]      # Confidenza del riconoscimento
+                confidence = word_recognized[1]
+                print("confidence:",confidence) # Confidenza del riconoscimento
                 if confidence > 0.2:  # Filtro per evitare falsi positivi
                     print("Hai detto:", recognized_word)
                     text_to_speech.say("Hai detto", recognized_word)
