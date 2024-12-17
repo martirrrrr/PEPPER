@@ -59,18 +59,18 @@ def speech_recognition(ip, port):
                 confidence = word_recognized[1]      # Confidenza del riconoscimento
                 if confidence > 0.5:  # Filtro per evitare falsi positivi
                     print("Hai detto:", recognized_word)
-                    text_to_speech.say("Hai detto {recognized_word}")
+                    text_to_speech.say("Hai detto", recognized_word")
                     
-                    if recognized_word == "sì":
+                    if recognized_word == vocabulary[0]:
                         text_to_speech.say("Perfetto! Continuiamo con la meditazione guidata.")
                         breathing_exercise(text_to_speech)
                         interaction = 0
                     
-                    elif recognized_word == "no":
+                    elif recognized_word == vocabulary[1]:
                         text_to_speech.say("Va bene. Facciamo una pausa. Chiamami se hai bisogno.")
                         interaction = 0
                     
-                    elif recognized_word == "aiuto":
+                    elif recognized_word == vocabulary[2]:
                         text_to_speech.say("Sono qui per aiutarti. Posso guidarti in un esercizio di respirazione o rilassamento. Di' sì per iniziare.")
                 
                 memory.insertData("WordRecognized", None)  # Reset dell'evento
