@@ -68,8 +68,8 @@ def speech_recognition(ip, port):
                     
                     if recognized_word == vocabulary[0]:
                         text_to_speech.say("Perfetto! Continuiamo con la meditazione guidata.")
-                        meditation_exercise(tts=text_to_speech, ip=ip, port=port, sound=None)
                         interaction = 0
+                        meditation_exercise(tts=text_to_speech, ip=ip, port=port, sound=None)
                     
                     elif recognized_word == vocabulary[1]:
                         text_to_speech.say("Va bene. Facciamo una pausa. Chiamami se hai bisogno.")
