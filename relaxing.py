@@ -21,7 +21,7 @@ def speech_recognition(ip, port):
         print("Lingue disponibili:", available_languages)
 
         
-        speech_recognition.setLanguage("Italian")  # Lingua italiana
+        #speech_recognition.setLanguage("Italian")  # Lingua italiana
 
         # Proxy per il text-to-speech (TTS)
         text_to_speech = ALProxy("ALTextToSpeech", ip, port)
@@ -63,7 +63,7 @@ def speech_recognition(ip, port):
                 recognized_word = word_recognized[0]  # La parola riconosciuta
                 confidence = word_recognized[1]
                 print("confidence:",confidence) # Confidenza del riconoscimento
-                if confidence > 0.2:  # Filtro per evitare falsi positivi
+                if confidence >= 0.5:  # Filtro per evitare falsi positivi
                     print("Hai detto:", recognized_word)
                     text_to_speech.say("Hai detto", recognized_word)
                     
