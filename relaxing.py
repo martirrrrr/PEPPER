@@ -63,27 +63,66 @@ def speech_recognition(ip, port):
     except Exception as e:
         print("[ERRORE] Si è verificato un problema:", e)
 
-def breathing_exercise(talker):
-    """
-    Esercizio guidato di respirazione.
-    """
-    try:
-        talker.say("Inspira lentamente...")
-        time.sleep(4)
-        talker.say("Trattieni il respiro per quattro secondi...")
-        time.sleep(4)
-        talker.say("Espira lentamente...")
-        time.sleep(4)
-        talker.say("Ripetiamo ancora una volta.")
-        time.sleep(1)
-        talker.say("Inspira...")
-        time.sleep(4)
-        talker.say("Espira...")
-        time.sleep(4)
-        talker.say("Esercizio di respirazione completato.")
+# Guida l'utente in un esercizio di respirazione profonda
+def breathing_exercise(tts, motion, sound):
+    tts.say("Trova una posizione comoda e chiudi gli occhi, se ti va.")
+    time.sleep(2)
+    play_relaxing_sound(sound)
+    time.sleep(5)  # Lascia un po' di tempo per ambientarsi
 
-    except Exception as e:
-        print("[ERRORE] Durante la respirazione:", e)
+    tts.say("Ora iniziamo con un respiro profondo. Inspira lentamente...")
+    motion.setStiffnesses(["Head", "LArm", "RArm", "LLeg", "RLeg"], [0.1]*5)
+    # Movimento della testa in avanti per stimolare l'inspirazione
+    motion.setAngles("Head", [0.1], 0.1)
+    time.sleep(4)  # Tempo per inspirare
+
+    tts.say("...espira lentamente... 1... 2... 3... 4...")
+    motion.setAngles("Head", [-0.1], 0.1)
+    time.sleep(4)  # Tempo per espirare
+
+    # Ripetizione dell'esercizio
+    tts.say("Ripeti il respiro profondo, concentrandoti sull'aria che entra e esce.")
+    for _ in range(3):
+        tts.say("Inspira... 1... 2... 3... 4...")
+        time.sleep(4)
+        tts.say("Espira... 1... 2... 3... 4...")
+        time.sleep(4)
+
+    tts.say("Perfetto, ora concentrati sul tuo corpo. Senti il tuo corpo che si rilassa ad ogni respiro.")
+
+# Funzione per guidare la meditazione e rilassamento
+def meditation_exercise(tts, motion, sound):
+    tts.say("Iniziamo un esercizio di meditazione e rilassamento.")
+    time.sleep(2)
+    tts.say("Immagina di essere su una spiaggia tranquilla. Il suono delle onde ti rilassa...")
+    time.sleep(5)
+
+    # Movimenti di rilassamento di Pepper
+    tts.say("Pepper ti guiderà ora con dei movimenti rilassanti.")
+    time.sleep(2)
+    motion.setAngles("Head", [0.2], 0.2)  # Inclinazione della testa per mostrare calma
+    time.sleep(3)
+    motion.setAngles("Head", [-0.2], 0.2)
+    time.sleep(3)
+
+    tts.say("Concentrati sul tuo corpo. Rilassa ogni parte, partendo dalla testa e scendendo giù verso i piedi.")
+    time.sleep(4)
+
+    # Esercizio di rilassamento progressivo muscolare
+    tts.say("Senti i tuoi muscoli che si rilassano, partendo dalla fronte.")
+    time.sleep(2)
+    tts.say("Ora rilassa gli occhi, poi il viso...")
+    time.sleep(2)
+    tts.say("Senti la tensione che lascia il tuo corpo, concentrati sulle spalle, braccia, mani.")
+    time.sleep(5)
+
+    tts.say("Ti invito a fare un altro ciclo di respirazione profonda...")
+    breathing_exercise(tts, motion, sound)
+
+    # Incoraggiamento finale
+    tts.say("Bravo! Continua a respirare lentamente e sentiti in pace. Sei pronto per una nuova giornata di serenità.")
+    time.sleep(3)
+
 
 if __name__ == "__main__":
     # Parametri di connessione di Pepper
