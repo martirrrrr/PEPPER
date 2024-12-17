@@ -2,6 +2,12 @@
 from naoqi import ALProxy
 import time
 
+def play_relaxing_sound(sound):
+    try:
+        sound.playFile("/path/to/relaxing_sound.wav")  # Inserisci il percorso del file audio
+    except Exception as e:
+        print("Errore nel riprodurre il suono:", e)
+
 def speech_recognition(ip, port):
     """
     Funzione che utilizza Pepper per riconoscere le parole 'sì', 'no' e 'aiuto'.
