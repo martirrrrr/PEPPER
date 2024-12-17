@@ -68,7 +68,7 @@ def speech_recognition(ip, port):
                     
                     if recognized_word == vocabulary[0]:
                         text_to_speech.say("Perfetto! Continuiamo con la meditazione guidata.")
-                        meditation_exercise(tts=text_to_speech, motion=None, sound=None)
+                        meditation_exercise(tts=text_to_speech, ip=ip, port=port, sound=None)
                         interaction = 0
                     
                     elif recognized_word == vocabulary[1]:
@@ -144,7 +144,7 @@ def meditation_exercise(tts, ip, port, sound=None):
 
     tts.say("Step due")
     #tts.say("Ti invito a fare un altro ciclo di respirazione profonda...")
-    breathing_exercise(tts, motion, sound)
+    breathing_exercise(tts,ip=ip, port=port, sound=None)
 
     # Incoraggiamento finale
     tts.say("Fine")
