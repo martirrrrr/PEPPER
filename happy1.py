@@ -73,6 +73,7 @@ def main(robot_ip, port):
         tts_service.say("Che te ne pare di questa canzone?")
 
         # Avvia la riproduzione della canzone (decommenta e sostituisci con il file corretto)
+         music_files = ["/home/nao/music/song1.mp3","/home/nao/music/song2.mp3","/home/nao/music/song3.mp3"]
          music_file = "/home/nao/music/song1.mp3"
          audio_service.playFile(music_file)
 
