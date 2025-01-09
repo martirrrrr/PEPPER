@@ -27,11 +27,11 @@ def main():
     tts_service.say("Che te ne pare di questa canzone?")
 
     # Avvia la riproduzione della canzone
-    music_file = "/home/nao/music/song1.mp3"
-    audio_service.playFile(music_file)
+    #music_file = "/home/nao/music/song1.mp3"
+    #audio_service.playFile(music_file)
 
     # Durata della canzone in secondi (modifica questo valore in base alla durata effettiva)
-    durata_canzone = 30
+    #durata_canzone = 30
 
     # Inizia la coreografia
     start_time = time.time()
