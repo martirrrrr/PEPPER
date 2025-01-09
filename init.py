@@ -1,4 +1,4 @@
-# script_principale.py
+# init.py
 
 from happy import main as happy_main
 from sad import main as sad_main
@@ -11,9 +11,9 @@ def read_value(path):
             val = file.read().strip()
             return int(val)
     except FileNotFoundError:
-        print(f"Errore: Il file '{path}' non è stato trovato.")
+        print(f"Error: file '{path}' not found.")
     except ValueError:
-        print(f"Errore: Il contenuto del file '{path}' non è un numero valido.")
+        print(f"Error: invalid file content'{path}'.")
     return None
 
 def main():
@@ -38,9 +38,9 @@ def main():
         elif neutral == 2:
             relax_main()
         else:
-            print("Valore restituito da neutral.py non valido.")
+            print("Invalid value returned by neutral.py .")
     else:
-        print("Valore nel file non riconosciuto.")
+        print("Invalid.")
 
 if __name__ == "__main__":
     main()
