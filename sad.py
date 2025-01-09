@@ -37,6 +37,20 @@ def main():
         "Qual è il colmo per un musicista? Perdere il ritmo della vita!"
     ]
 
+
+    jokes = [
+         "Why don’t skeletons fight each other? Because they don’t have the guts.",
+         "What did one ocean say to the other ocean? Nothing, they just waved.",
+         "Why did the scarecrow win an award? Because he was outstanding in his field.",
+         "Why don’t eggs tell jokes? They might crack up.",
+         "What’s orange and sounds like a parrot? A carrot.",
+         "Why did the math book look sad? Because it had too many problems.",
+         "Why can’t your nose be 12 inches long? Because then it would be a foot!",
+         "What do you call fake spaghetti? An impasta.",
+         "What do you call cheese that isn’t yours? Nacho cheese.",
+         "Why don’t scientists trust atoms? Because they make up everything."
+    ]
+
     # Saluto empatico
     tts_service.say("Mi dispiace che tu ti senta triste. Vorrei raccontarti alcune barzellette per tirarti su di morale.")
 
