@@ -36,3 +36,4 @@ stat.txt -- output del modello
 ***TO FIX***
 -- Sincronizzazione di musica e balletto in happy.py
 -- Movimenti di meditazione vari da inserire in relax.py
+-- aggiungere altre due canzoni (ed eventalmente balletti diversi)
