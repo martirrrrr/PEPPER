@@ -5,7 +5,7 @@ def main():
     # Connessione al robot
     session = qi.Session()
     try:
-        session.connect("tcp://<indirizzo_ip_pepper>:9559")
+        session.connect("tcp://192.168.0:9559")
     except RuntimeError:
         print("Impossibile connettersi a Pepper. Verifica l'indirizzo IP e la connessione di rete.")
         return
