@@ -26,4 +26,9 @@ Alternativo: init.sh per avviare tutto. E' richiesto che stat.txt sia presente i
 
 *************
 
-
+init.py -- serve per avviare il programma intero.
+sad.py -- emozioni (barzellette)
+relax.py -- meditazione 
+happy.py -- balletto
+neutral.py -- scegli tu (s.r.)
+stat.txt -- output del modello
