@@ -33,7 +33,8 @@ happy.py -- balletto
 neutral.py -- scegli tu (s.r.)
 stat.txt -- output del modello
 
-***TO FIX***
--- Sincronizzazione di musica e balletto in happy.py
+***TO FIX PER LA PROSSIMA VOLTA***
+-- Sincronizzazione di musica e balletto in happy.py   (già fatto, va solo testato)
 -- Movimenti di meditazione vari da inserire in relax.py
--- aggiungere altre due canzoni (ed eventalmente balletti diversi)
+-- aggiungere altre due canzoni (ed eventalmente balletti diversi) a happy1.py
+-- aggiungere musica rilassante in relax.py e provare a generare delle semplici movenze da yoga/meditazione (vedi riferimento happy1.py)
