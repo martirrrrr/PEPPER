@@ -11,7 +11,7 @@ def connect_to_pepper(robot_ip, port):
     """
     session = qi.Session()
     try:
-        session.connect(f"tcp://{robot_ip}:{port}")
+        session.connect("tcp://"+str(robot_ip)+":"+str(port))
         print("[INFO] Connessione al robot stabilita.")
         return session
     except RuntimeError as e:
@@ -25,8 +25,9 @@ def perform_gesture(motion_service):
     :param motion_service: Servizio ALMotion
     """
     print("[INFO] Eseguo il gesto 'ok' con la mano destra...")
-    names = ["RHand", "RThumb1", "RThumb2"]
-    angles = [1.0, 1.0, 1.0]  # Apri la mano e alza il pollice
+    #names = ["RHand", "RThumb1", "RThumb2"]
+    names = ["LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll","LWristYaw"]
+    angles = [-0.5, 0.3, -1.0, -0.5, 0.0]  # Apri la mano e alza il pollice
     motion_service.angleInterpolation(names, angles, [1.0] * len(names), True)
 
 def play_dance(motion_service, durata_canzone):
@@ -72,8 +73,8 @@ def main(robot_ip, port):
         tts_service.say("Che te ne pare di questa canzone?")
 
         # Avvia la riproduzione della canzone (decommenta e sostituisci con il file corretto)
-        # music_file = "/home/nao/music/song1.mp3"
-        # audio_service.playFile(music_file)
+         music_file = "/home/nao/music/song1.mp3"
+         audio_service.playFile(music_file)
 
         # Durata della canzone in secondi
         durata_canzone = 30  # Modifica in base alla durata effettiva
