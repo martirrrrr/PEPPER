@@ -1,23 +1,27 @@
 import socket
 
 # Client configuration
-HOST = '192.168.1.100'  # Replace with Pepper's IP address
-PORT = 12345            # Must match the server's port
+SERVER_IP = '192.168.1.104'  # Pepper's IP address
+SERVER_PORT = 5000           # Port Pepper is listening on
 
-def start_client():
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((HOST, PORT))
-    
+# Create the socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+try:
+    # Connect to the server
+    client_socket.connect((SERVER_IP, SERVER_PORT))
+    print("Connected to Pepper at {}:{}".format(SERVER_IP, SERVER_PORT))
+
     # Send data to the server
     message = "Hello, Pepper!"
-    client_socket.sendall(message.encode('utf-8'))
-    print("Message sent:", message)
-    
-    # Receive the response from the server
-    response = client_socket.recv(1024)
-    print("Response from server:", response)
-    
-    client_socket.close()
+    client_socket.send(message)
+    print("Message sent: {}".format(message))
 
-if _name_ == "_main_":
-    start_client()
+    # Receive response from the server
+    response = client_socket.recv(1024)
+    print("Response from server: {}".format(response))
+
+except Exception as e:
+    print("Error: {}".format(e))
+finally:
+    client_socket.close()
