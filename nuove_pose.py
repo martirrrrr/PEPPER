@@ -1,3 +1,35 @@
+def perform_prayer(motion_service):
+    """
+    Fa eseguire a Pepper il movimento di preghiera (mani unite davanti al corpo).
+    
+    :param motion_service: Servizio ALMotion
+    """
+    print("[INFO] Eseguo il movimento di preghiera...")
+    
+    # Articolazioni per entrambe le braccia
+    joint_names = [
+        "LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll", "LWristYaw",
+        "RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll", "RWristYaw"
+    ]
+    
+    # Angoli per la posizione di preghiera
+    angles = [
+        1.0, 0.2, -1.5, -0.5, 0.0,  # Braccio sinistro
+        1.0, -0.2, 1.5, 0.5, 0.0   # Braccio destro
+    ]
+    
+    # Tempi di esecuzione per ogni movimento
+    times = [1.5] * len(joint_names)
+    
+    # Esegui il movimento
+    motion_service.angleInterpolation(joint_names, angles, times, True)
+    
+    # Unire le mani
+    print("[INFO] Unisco le mani...")
+    motion_service.angleInterpolation(["LHand", "RHand"], [0.0, 0.0], [1.0, 1.0], True)
+
+
+
 def move_arms_in_wave(motion_service):
     """
     Movimento a onda con le braccia di Pepper.
@@ -84,6 +116,6 @@ def full_dance_routine(motion_service):
     print("[INFO] Inizio routine di ballo...")
     move_arms_in_wave(motion_service)
     spin_torso(motion_service)
-    step_side_to_side(motion_service)
+    #step_side_to_side(motion_service)
     nod_head(motion_service)
     print("[INFO] Routine di ballo completata!")
