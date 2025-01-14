@@ -1,3 +1,57 @@
+from naoqi import ALProxy
+from naoqi import ALMotion
+
+def perform_meditation_pose_static(motion_service):
+    print(" Eseguo la posa da meditazione (statica)...")
+    
+    # Nome dei giunti per la posa
+    joint_names = [
+        "LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll", "LWristYaw",
+        "RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll", "RWristYaw",
+        "HeadPitch"
+    ]
+    
+    # Angoli per simulare rilassamento
+    meditation_angles = [
+        1.2, 0.3, -1.0, -0.6, 0.0,   # Braccio sinistro rilassato
+        1.2, -0.3, 1.0, 0.6, 0.0,    # Braccio destro rilassato
+        0.2                          # Testa leggermente inclinata in avanti
+    ]
+    
+    # Tempi per raggiungere la posizione
+    times = [1.5] * len(joint_names)
+    
+    # Esegui i movimenti
+    motion_service.angleInterpolation(joint_names, meditation_angles, times, True)
+    print("Posa da meditazione completata!")
+
+
+
+def perform_dance(motion_service):
+    print("Eseguo una danza...")
+    joint_names = [
+        "LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll",
+        "RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll",
+        "HeadYaw", "HeadPitch"
+    ]
+    
+    # Sequenza di posizioni per la danza
+    dance_moves = [
+        [1.0, 0.5, -1.0, -1.0, 1.0, -0.5, 1.0, 1.0, 0.5, -0.2],  # Posizione 1
+        [0.5, 0.3, -0.5, -0.5, 0.5, -0.3, 0.5, 0.5, -0.5, 0.2],  # Posizione 2
+        [1.2, 0.0, -1.2, -1.2, 1.2, 0.0, 1.2, 1.2, 0.0, 0.0]     # Posizione 3
+    ]
+    
+    times = [1.0] * len(joint_names)
+    
+    # Esegui i movimenti
+    for move in dance_moves:
+        motion_service.angleInterpolation(joint_names, move, times, True)
+    
+    print("Danza completata!")
+
+
+
 def perform_clap(motion_service):
     print("Eseguo il movimento di applauso...")
 
@@ -63,12 +117,7 @@ def perform_prayer(motion_service):
 
 
 def move_arms_in_wave(motion_service):
-    """
-    Movimento a onda con le braccia di Pepper.
-
-    :param motion_service: Servizio ALMotion
-    """
-    print("[INFO] Movimento a onda con le braccia...")
+    print("Movimento a onda con le braccia...")
     names = ["LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll", 
              "RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll"]
     angles_list = [
@@ -102,12 +151,7 @@ def spin_torso(motion_service):
 
 
 def step_side_to_side(motion_service):
-    """
-    Passo laterale a destra e sinistra con Pepper.
-
-    :param motion_service: Servizio ALMotion
-    """
-    print("[INFO] Passo laterale...")
+    print("Passo laterale...")
     names = ["LHipYawPitch", "RHipYawPitch"]
     angles_list = [
         [-0.2, 0.2],  # Passo a destra
@@ -121,12 +165,7 @@ def step_side_to_side(motion_service):
 
 
 def nod_head(motion_service):
-    """
-    Movimento della testa di Pepper che annuisce.
-
-    :param motion_service: Servizio ALMotion
-    """
-    print("[INFO] Movimento della testa...")
+    print("Movimento della testa...")
     names = ["HeadPitch", "HeadYaw"]
     angles_list = [
         [0.3, 0.0],  # Chin up
@@ -140,14 +179,17 @@ def nod_head(motion_service):
 
 
 def full_dance_routine(motion_service):
-    """
-    Esegue una routine completa di ballo.
-
-    :param motion_service: Servizio ALMotion
-    """
     print("[INFO] Inizio routine di ballo...")
     move_arms_in_wave(motion_service)
     spin_torso(motion_service)
     #step_side_to_side(motion_service)
     nod_head(motion_service)
-    print("[INFO] Routine di ballo completata!")
+    print("Routine di ballo completata!")
+
+
+if __name__ == "__main__":
+    # Parametri di connessione di Pepper
+    ROBOT_IP = "192.168.1.104"  # Sostituisci con l'indirizzo IP di Pepper
+    ROBOT_PORT = 9559           # Porta predefinita di Pepper
+
+    speech_recognition(ROBOT_IP, ROBOT_PORT)
