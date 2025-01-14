@@ -1,10 +1,43 @@
-def perform_prayer(motion_service):
-    """
-    Fa eseguire a Pepper il movimento di preghiera (mani unite davanti al corpo).
+def perform_clap(motion_service):
+    print("Eseguo il movimento di applauso...")
+
+    # Nomi dei giunti per entrambe le braccia
+    joint_names = [
+        "LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll",
+        "RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll"
+    ]
     
-    :param motion_service: Servizio ALMotion
-    """
-    print("[INFO] Eseguo il movimento di preghiera...")
+    # Posizione iniziale: mani aperte
+    start_angles = [
+        1.0, 0.2, -1.5, -0.5,  # Braccio sinistro
+        1.0, -0.2, 1.5, 0.5    # Braccio destro
+    ]
+    
+    # Posizione di battuta: mani chiuse al centro
+    clap_angles = [
+        1.0, 0.0, -1.2, -0.3,  # Braccio sinistro
+        1.0, 0.0, 1.2, 0.3     # Braccio destro
+    ]
+    
+    # Tempi di esecuzione per ogni movimento
+    times = [0.6] * len(joint_names)
+    
+    # Numero di battute
+    repetitions = 5
+    
+    for _ in range(repetitions):
+        # Movimento: apri le braccia
+        motion_service.angleInterpolation(joint_names, start_angles, times, True)
+        # Movimento: chiudi le braccia (batti le mani)
+        motion_service.angleInterpolation(joint_names, clap_angles, times, True)
+    
+    # Torna alla posizione iniziale
+    motion_service.angleInterpolation(joint_names, start_angles, times, True)
+    print("Applauso completato!")
+
+
+def perform_prayer(motion_service):
+    print("Eseguo il movimento di preghiera...")
     
     # Articolazioni per entrambe le braccia
     joint_names = [
@@ -25,9 +58,8 @@ def perform_prayer(motion_service):
     motion_service.angleInterpolation(joint_names, angles, times, True)
     
     # Unire le mani
-    print("[INFO] Unisco le mani...")
+    print("Unisco le mani...")
     motion_service.angleInterpolation(["LHand", "RHand"], [0.0, 0.0], [1.0, 1.0], True)
-
 
 
 def move_arms_in_wave(motion_service):
