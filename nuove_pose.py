@@ -28,27 +28,39 @@ def perform_meditation_pose_static(motion_service):
 
 
 def perform_dance(motion_service):
-    print("Eseguo una danza...")
+    """
+    Esegue una danza variegata di circa 30 secondi con Pepper.
+    :param motion_service: Servizio ALMotion
+    """
+    print("[INFO] Inizio della danza di Pepper...")
+    
     joint_names = [
         "LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll",
         "RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll",
         "HeadYaw", "HeadPitch"
     ]
     
-    # Sequenza di posizioni per la danza
+    # Sequenza di movimenti per il ballo (6 set di pose)
     dance_moves = [
-        [1.0, 0.5, -1.0, -1.0, 1.0, -0.5, 1.0, 1.0, 0.5, -0.2],  # Posizione 1
-        [0.5, 0.3, -0.5, -0.5, 0.5, -0.3, 0.5, 0.5, -0.5, 0.2],  # Posizione 2
-        [1.2, 0.0, -1.2, -1.2, 1.2, 0.0, 1.2, 1.2, 0.0, 0.0]     # Posizione 3
+        [1.0, 0.5, -1.0, -1.0, 1.0, -0.5, 1.0, 1.0, 0.5, -0.2],  # Posizione iniziale
+        [0.5, 0.3, -0.5, -0.5, 0.5, -0.3, 0.5, 0.5, -0.5, 0.2],  # Movimento fluido 1
+        [1.2, 0.0, -1.2, -1.2, 1.2, 0.0, 1.2, 1.2, 0.0, 0.0],    # Braccia in alto
+        [0.8, 0.2, -0.8, -0.6, 0.8, -0.2, 0.8, 0.6, 0.3, -0.3],  # Movimento fluido 2
+        [1.0, -0.5, -1.0, -1.0, 1.0, 0.5, 1.0, 1.0, -0.5, 0.2],  # Rotazione spalle
+        [0.7, 0.4, -0.6, -0.5, 0.7, -0.4, 0.6, 0.5, 0.0, 0.0],   # Movimento simmetrico
+        [1.2, -0.3, -1.2, -0.9, 1.2, 0.3, 1.2, 0.9, -0.2, 0.1],  # Fase dinamica
+        [1.0, 0.2, -1.0, -0.7, 1.0, -0.2, 1.0, 0.7, 0.2, -0.1],  # Movimento finale
     ]
     
+    # Tempi relativi per ogni movimento
     times = [1.0] * len(joint_names)
     
-    # Esegui i movimenti
-    for move in dance_moves:
-        motion_service.angleInterpolation(joint_names, move, times, True)
+    # Ciclo principale per 30 secondi di danza
+    for _ in range(3):  # Ripeti la sequenza tre volte (3 x ~10 secondi = 30 secondi)
+        for move in dance_moves:
+            motion_service.angleInterpolation(joint_names, move, times, True)
     
-    print("Danza completata!")
+    print("[INFO] Danza completata!")
 
 
 
