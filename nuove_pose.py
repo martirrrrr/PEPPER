@@ -1,5 +1,5 @@
 from naoqi import ALProxy
-from naoqi import ALMotion
+#from naoqi import ALMotion
 
 def perform_meditation_pose_static(motion_service):
     print(" Eseguo la posa da meditazione (statica)...")
