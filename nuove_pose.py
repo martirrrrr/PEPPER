@@ -204,4 +204,5 @@ if __name__ == "__main__":
     ROBOT_IP = "192.168.1.104"  # Sostituisci con l'indirizzo IP di Pepper
     ROBOT_PORT = 9559           # Porta predefinita di Pepper
 
-    speech_recognition(ROBOT_IP, ROBOT_PORT)
+    motion_service = ALProxy("ALMotion", ROBOT_IP, ROBOT_PORT)
+    full_dance_routine(motion_service)
